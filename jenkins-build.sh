@@ -8,6 +8,6 @@ docker tag jenkins:latest $JENKINS_REPO_URI:latest
 
 # docker push $JENKINS_REPO_URI:latest
 
-yes | docker image prune -a
+# yes | docker image prune -a
 
-yes | docker volume prune -a
+# yes | docker volume prune -a

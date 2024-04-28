@@ -1,0 +1,25 @@
+<flow-definition plugin="workflow-job@1400.v7fd111b_ec82f">
+<actions>
+<org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2198.v41dd8ef6dd56"/>
+<org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2198.v41dd8ef6dd56">
+<jobProperties/>
+<triggers/>
+<parameters/>
+<options/>
+</org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+</actions>
+<description/>
+<keepDependencies>false</keepDependencies>
+<properties>
+<com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.37.3.1">
+<projectUrl>https://github.com/PhiThai1309/application-tracker/</projectUrl>
+<displayName/>
+</com.coravy.hudson.plugins.github.GithubProjectProperty>
+</properties>
+<definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3894.vd0f0248b_a_fc4">
+<script>pipeline { environment { registry = "manhphi/application-tracker" registryCredential = 'dockerhub' dockerImage = '' } agent any stages { stage('Cloning our Git') { steps { git(url: 'https://github.com/PhiThai1309/application-tracker', branch: 'main') } } stage('Building Docker Image') { steps { script { dockerImage = docker.build registry + ":$BUILD_NUMBER" } } } stage('Deploying Docker Image to Dockerhub') { steps { script { docker.withRegistry('', registryCredential) { dockerImage.push() } } } } stage('Cleaning Up') { steps{ sh "docker rmi --force $registry:$BUILD_NUMBER" } } } } </script>
+<sandbox>true</sandbox>
+</definition>
+<triggers/>
+<disabled>false</disabled>
+</flow-definition>

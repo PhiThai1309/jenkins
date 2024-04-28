@@ -67,8 +67,7 @@ RUN apt-get update && \
 # add docker group and add jenkins user to docker group
 # COPY entrypoint.sh /entrypoint.sh
 RUN groupadd -g ${DOCKER_GROUP_ID} docker && \
-    usermod -aG docker jenkins && \
-    chmod +x /entrypoint.sh
+    usermod -aG docker jenkins 
 
 
 # Switch back to the Jenkins user
